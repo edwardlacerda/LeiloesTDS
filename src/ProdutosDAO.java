@@ -44,7 +44,6 @@ public class ProdutosDAO {
     }
 
     public ArrayList<ProdutosDTO> listarProdutos() {
-
         return listagem;
     }
 
@@ -54,11 +53,11 @@ public class ProdutosDAO {
             conexao.conectar();
 
             String sql = "UPDATE produtos SET status = 'vendido' WHERE = ?";
-                    
+
             PreparedStatement query = conexao.getConexao().prepareStatement(sql);
             query.setInt(1, idProduto);
             query.executeUpdate();
-            
+
         } catch (Exception e) {
             System.out.println("Erro ao executar update" + e);
         }
