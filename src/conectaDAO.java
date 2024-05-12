@@ -20,7 +20,7 @@ public class conectaDAO {
         return conexao;
     }
 
-    private final String url = "jdbc:mysql://localhost:3306/uc11?useSSL=false";
+    private final String url = "jdbc:mysql://localhost:3306/uc11?allowPublicKeyRetrieval=true&useSSL=false";
     private final String user = "root";
     private final String password = "root";
 
