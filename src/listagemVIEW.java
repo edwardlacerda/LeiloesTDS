@@ -1,5 +1,5 @@
 
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -43,17 +43,7 @@ public class listagemVIEW extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        listaProdutos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nome", "Valor", "Status"
-            }
-        ));
+        listaProdutos.setModel(exibirTabela());
         jScrollPane1.setViewportView(listaProdutos);
 
         jLabel1.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
@@ -145,8 +135,8 @@ public class listagemVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        vendasVIEW vendas = new vendasVIEW(); 
+        vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -201,6 +191,31 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
+    
+    private DefaultTableModel exibirTabela() {
+        String[] coluna = {"Id", "Nome", "Valor", "Status"};
+
+        DefaultTableModel tabela = new DefaultTableModel(coluna, 0);
+
+        List<ProdutosDTO> lista = ProdutosDAO.listarProdutos();
+
+        for (int i = 0; i < lista.size(); i++) {
+            ProdutosDTO produto = lista.get(i);
+
+            String[] linha = {
+                Integer.toString(produto.getId()),
+                produto.getNome(),
+                Integer.toString(produto.getValor()),
+                produto.getStatus()
+            };
+
+            tabela.addRow(linha);
+
+        }
+
+        return tabela;
+    }
+    
     private void listarProdutos(){
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
@@ -208,7 +223,7 @@ public class listagemVIEW extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
             
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
+            List<ProdutosDTO> listagem = produtosdao.listarProdutos();
             
             for(int i = 0; i < listagem.size(); i++){
                 model.addRow(new Object[]{
@@ -219,6 +234,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                 });
             }
         } catch (Exception e) {
+            System.out.println("Erro: " + e);
         }
     
     }
