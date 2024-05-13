@@ -105,7 +105,7 @@ public class ProdutosDAO {
             conectaDAO conexao = new conectaDAO();
             conexao.conectar();
 
-            String sql = "UPDATE produtos SET status = 'vendido' WHERE = ?";
+            String sql = "UPDATE produtos SET status = 'vendido' WHERE id = ?";
 
             PreparedStatement query = conexao.getConexao().prepareStatement(sql);
             query.setInt(1, idProduto);
